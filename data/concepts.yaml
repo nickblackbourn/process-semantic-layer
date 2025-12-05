@@ -1,0 +1,135 @@
+# Concept Graph for Process Semantic Layer
+# Defines business concepts with names, synonyms, and relationships
+
+concepts:
+  - id: employee_onboarding
+    name: Employee Onboarding
+    synonyms:
+      - new hire
+      - joining process
+      - orientation
+      - staff induction
+      - onboarding
+    related_to:
+      - timekeeping
+      - benefits_enrollment
+
+  - id: payroll_processing
+    name: Payroll Processing
+    synonyms:
+      - payroll
+      - salary processing
+      - wage payment
+      - compensation
+    related_to:
+      - timekeeping
+      - tax_filing
+
+  - id: vendor_management
+    name: Vendor Management
+    synonyms:
+      - supplier management
+      - vendor relations
+      - procurement
+      - supplier onboarding
+    related_to:
+      - contract_review
+      - expense_approval
+
+  - id: compliance_audit
+    name: Compliance Audit
+    synonyms:
+      - audit
+      - compliance review
+      - regulatory audit
+      - compliance check
+    related_to:
+      - financial_reporting
+      - tax_filing
+
+  - id: financial_reporting
+    name: Financial Reporting
+    synonyms:
+      - financial reports
+      - accounting reports
+      - finance reporting
+      - fiscal reporting
+    related_to:
+      - compliance_audit
+      - expense_approval
+
+  - id: timekeeping
+    name: Timekeeping
+    synonyms:
+      - time tracking
+      - attendance
+      - hours logging
+      - timesheet
+    related_to:
+      - payroll_processing
+      - employee_onboarding
+
+  - id: expense_approval
+    name: Expense Approval
+    synonyms:
+      - expense management
+      - reimbursement
+      - expense review
+      - spending approval
+    related_to:
+      - financial_reporting
+      - vendor_management
+
+  - id: contract_review
+    name: Contract Review
+    synonyms:
+      - contract management
+      - agreement review
+      - legal review
+      - contract approval
+    related_to:
+      - vendor_management
+      - compliance_audit
+
+  - id: tax_filing
+    name: Tax Filing
+    synonyms:
+      - tax submission
+      - tax returns
+      - tax compliance
+      - tax reporting
+    related_to:
+      - payroll_processing
+      - compliance_audit
+
+  - id: benefits_enrollment
+    name: Benefits Enrollment
+    synonyms:
+      - benefits registration
+      - employee benefits
+      - benefits signup
+      - health insurance enrollment
+    related_to:
+      - employee_onboarding
+      - payroll_processing
+
+  - id: performance_review
+    name: Performance Review
+    synonyms:
+      - performance appraisal
+      - employee evaluation
+      - performance assessment
+      - annual review
+    related_to:
+      - employee_onboarding
+
+  - id: budget_planning
+    name: Budget Planning
+    synonyms:
+      - budgeting
+      - financial planning
+      - budget allocation
+      - fiscal planning
+    related_to:
+      - financial_reporting
+      - expense_approval
