@@ -38,8 +38,8 @@ class TaggedDocument(Document):
 
 
 class QueryRequest(BaseModel):
-    """Request model for the query endpoint."""
-    query: str = Field(..., min_length=1, description="Search query text")
+    """Request model for querying the pipeline."""
+    query: str = Field(..., min_length=1, description="The search query")
     top_k: int = Field(default=5, ge=1, le=20, description="Number of results to return")
 
 

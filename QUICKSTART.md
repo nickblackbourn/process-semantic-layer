@@ -10,45 +10,27 @@ cd process-semantic-layer
 pip install -r requirements.txt
 ```
 
-## Usage Options
+## Usage
 
-### Option 1: Interactive Demo (Recommended)
+### Run the Demo
+
 ```powershell
-python demo.py
+python run_demo.py
 ```
-Shows 5 example queries, then lets you try your own.
 
-### Option 2: Direct Pipeline Test
+This runs 4 test queries with detailed visualization:
+- Concept matching results
+- Document filtering steps
+- Ranking with confidence scores
+- Performance summary dashboard
+
+### Interactive Mode
+
 ```powershell
-python test_pipeline.py
-```
-Runs 4 pre-defined test queries and shows detailed results.
-
-### Option 3: API Server
-```powershell
-python main.py
-```
-Starts FastAPI server on http://127.0.0.1:8001
-
-Query via PowerShell:
-```powershell
-$body = @{
-    query = "how do new hires get benefits?"
-    top_k = 3
-} | ConvertTo-Json
-
-Invoke-RestMethod -Uri "http://127.0.0.1:8001/query" `
-  -Method Post `
-  -Body $body `
-  -ContentType "application/json"
+python run_demo.py --interactive
 ```
 
-Query via curl:
-```bash
-curl -X POST "http://127.0.0.1:8001/query" \
-  -H "Content-Type: application/json" \
-  -d '{"query": "how do new hires get benefits?", "top_k": 3}'
-```
+Enter your own queries and explore the system interactively.
 
 ## Example Queries to Try
 
@@ -65,20 +47,15 @@ curl -X POST "http://127.0.0.1:8001/query" \
 
 | File | Purpose |
 |------|---------|
-| `demo.py` | Interactive demonstration |
-| `test_pipeline.py` | Automated testing |
-| `main.py` | API server entry point |
-| `test_api.py` | API testing script |
+| `run_demo.py` | Demo script (automated + interactive modes) |
 | `README.md` | Full documentation |
-| `IMPLEMENTATION_SUMMARY.md` | Implementation details |
+| `data/concepts.yaml` | Business concept definitions |
+| `data/documents/` | Sample process documents |
 
 ## Troubleshooting
 
 **"ModuleNotFoundError"**
 - Run: `pip install -r requirements.txt`
-
-**"Port already in use"**
-- Change port in `main.py` (line 13)
 
 **"Slow first query"**
 - Model downloads on first run (~90MB)

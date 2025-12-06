@@ -1,6 +1,6 @@
 # Process Semantic Layer - Proof of Concept
 
-A lightweight semantic layer demonstrating how a concept graph guides enterprise document retrieval. This PoC combines business process concepts, document tagging, embeddings, and vector similarity search through a simple FastAPI endpoint.
+A lightweight semantic layer demonstrating how a concept graph guides enterprise document retrieval. This PoC combines business process concepts, document tagging, embeddings, and vector similarity search in a working Python pipeline.
 
 ## Purpose
 
@@ -62,7 +62,6 @@ Top K Results (doc_id, title, concepts, score, snippet)
 - **Document Tagging** (`src/document_loader.py`): Automatic concept assignment during document loading
 - **Embedding Engine** (`src/embedding_engine.py`): Sentence-transformers for vectorization and cosine similarity
 - **Retrieval Pipeline** (`src/retrieval_pipeline.py`): Orchestrates concept filtering → embedding ranking
-- **FastAPI Endpoint** (`src/api.py`): Single POST /query endpoint exposing the pipeline
 
 ---
 
@@ -75,71 +74,39 @@ pip install -r requirements.txt
 ```
 
 This installs:
-- `fastapi` + `uvicorn` - API framework
 - `pydantic` - Data models
 - `pyyaml` - Concept graph parsing
 - `sentence-transformers` - Embedding generation
 - `numpy` + `scikit-learn` - Vector operations
 
-### 2. Run a Test
+### 2. Run the Demo
 
-The easiest way to see the system work:
-
-```powershell
-python test_pipeline.py
-```
-
-This runs 4 test queries and shows results with concept matching, filtering, and ranking visualization.
-
-### 3. Or Start the API Server
+**Option A: Automated Demo (Recommended)**
 
 ```powershell
-python main.py
+python run_demo.py
 ```
 
-The server starts on `http://localhost:8001` with hot reload enabled.
+Runs 4 test queries and displays:
+- Concept matching visualization
+- Document filtering steps
+- Ranking with confidence scores
+- Performance summary dashboard
 
-On startup, the pipeline:
+**Option B: Interactive Mode**
+
+```powershell
+python run_demo.py --interactive
+```
+
+Enter your own queries and see results in real-time.
+
+**What happens on startup:**
 1. Loads 12 concepts from YAML
 2. Loads 5 markdown documents
 3. Tags each document with matched concepts
 4. Generates embeddings using `all-MiniLM-L6-v2` model
-5. Prepares for queries
-
-### 4. Query the API
-
-**Using PowerShell:**
-
-```powershell
-$body = @{
-    query = "how do new hires get benefits?"
-    top_k = 3
-} | ConvertTo-Json
-
-Invoke-RestMethod -Uri "http://localhost:8001/query" -Method Post -Body $body -ContentType "application/json"
-```
-
-**Using curl:**
-
-```bash
-curl -X POST "http://localhost:8001/query" \
-  -H "Content-Type: application/json" \
-  -d '{"query": "how do new hires get benefits?", "top_k": 3}'
-```
-
-**Response format:**
-
-```json
-[
-  {
-    "doc_id": "doc1",
-    "title": "Employee Onboarding Procedure",
-    "matched_concepts": ["employee_onboarding", "benefits_enrollment", "timekeeping"],
-    "score": 0.455,
-    "snippet": "This document outlines the complete employee onboarding process for new hires..."
-  }
-]
-```
+5. Ready to process queries
 
 ---
 
@@ -211,9 +178,7 @@ Business analysts can edit this. No ontology engineers required. Documents auto-
 process-semantic-layer/
 ├── README.md                      # This file
 ├── requirements.txt               # Python dependencies
-├── main.py                        # Server entry point
-├── test_pipeline.py               # Direct pipeline test (recommended first run)
-├── demo.py                        # Interactive demonstration
+├── run_demo.py                    # Demo script (automated + interactive modes)
 ├── data/
 │   ├── concepts.yaml             # Business concept graph (12 concepts)
 │   └── documents/                # Process markdown documents (5 docs)
@@ -228,8 +193,7 @@ process-semantic-layer/
     ├── concept_graph.py          # Concept loading and matching
     ├── document_loader.py        # Document parsing and tagging
     ├── embedding_engine.py       # Embedding generation and ranking
-    ├── retrieval_pipeline.py     # Orchestration logic
-    └── api.py                    # FastAPI application
+    └── retrieval_pipeline.py     # Orchestration logic
 ```
 
 ---
@@ -255,14 +219,6 @@ The `all-MiniLM-L6-v2` model provides:
 ### Why In-Memory?
 
 This PoC prioritizes clarity over scale. In-memory storage keeps the code simple. A production system would use vector databases (Pinecone, Weaviate, Qdrant) and persistent storage.
-
-### Why FastAPI?
-
-FastAPI offers:
-- Automatic OpenAPI documentation (`/docs`)
-- Pydantic validation (type safety)
-- Async support (if needed later)
-- Minimal boilerplate
 
 ---
 
@@ -329,43 +285,6 @@ This PoC opens several directions for exploration:
 
 ---
 
-## API Reference
-
-### POST /query
-
-Execute a semantic query against the document collection.
-
-**Request:**
-```json
-{
-  "query": "string (required, min 1 char)",
-  "top_k": "integer (optional, default 5, range 1-20)"
-}
-```
-
-**Response:**
-```json
-[
-  {
-    "doc_id": "string",
-    "title": "string",
-    "matched_concepts": ["string"],
-    "score": "float (0.0-1.0)",
-    "snippet": "string"
-  }
-]
-```
-
-### GET /
-
-Health check returning service status.
-
-### GET /health
-
-Detailed health check with component status and counts.
-
----
-
 ## Extending This PoC
 
 **Add more concepts:** Expand `data/concepts.yaml` with additional business terms and relationships
@@ -388,13 +307,13 @@ Detailed health check with component status and counts.
 
 This is a proof of concept with intentional constraints:
 
-- **No authentication** - API is completely open
-- **No persistence** - Restarting server reloads and re-embeds everything
+- **No persistence** - Documents and embeddings are loaded in-memory each run
 - **Simple matching** - Concept matching is basic substring match (no NLP)
 - **No query expansion** - Related concepts are loaded but not used yet
 - **Single-language** - Only handles English text
 - **No caching** - Every query recomputes similarities
 - **Limited error handling** - Basic exception handling only
+- **Small scale** - Tested on 5 documents, 12 concepts
 
 These limitations keep the implementation simple for learning and experimentation.
 
