@@ -443,7 +443,6 @@ This PoC is one answer. What's yours?
 
 ## Further Reading
 
-- `IMPLEMENTATION_SUMMARY.md` - Detailed technical implementation notes
 - `QUICKSTART.md` - Quick reference for developers
 
 ---
