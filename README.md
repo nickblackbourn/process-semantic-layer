@@ -1,17 +1,10 @@
-# Process Semantic Layer - Proof of Concept
+# Process Semantic Layer
 
-A lightweight semantic layer demonstrating how a concept graph guides enterprise document retrieval. This PoC combines business process concepts, document tagging, embeddings, and vector similarity search through a simple FastAPI endpoint.
+**The problem:** Most enterprise AI treats your documents like random text. It doesn't understand that "new hire," "onboarding," and "orientation" all mean the same thing in your business.
 
-## Purpose
+**The idea:** What if you could teach your AI the language of your business—explicitly?
 
-This project proves that structured business knowledge (represented as a concept graph) can meaningfully improve document retrieval in enterprise AI systems. Rather than pure keyword matching or embedding similarity alone, the system:
-
-1. **Maps queries to business concepts** using name and synonym matching
-2. **Filters documents** based on concept tags (semantic pre-filtering)
-3. **Ranks filtered documents** using embedding similarity (semantic relevance)
-4. **Returns structured results** with matched concepts and relevance scores
-
-This architecture reflects real-world applied AI patterns where domain knowledge guides retrieval.
+This is a working experiment to test whether a simple concept graph improves document retrieval.
 
 ## Architecture
 
