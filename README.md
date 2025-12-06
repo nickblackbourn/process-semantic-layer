@@ -18,6 +18,22 @@ This architecture reflects real-world applied AI patterns where domain knowledge
 
 ---
 
+## Context: Why This Matters Now
+
+As a business process management consultant, I've watched organizations struggle to connect their AI investments with their actual operational knowledge. We have decades of work in business semantics—standards like SBVR (Semantics of Business Vocabulary and Rules)—that defined how to capture business meaning formally.
+
+Then AI came along, and we threw it all away for "let the LLM figure it out."
+
+This experiment asks: **What if we didn't?**
+
+What if we took the structured business vocabulary work seriously—but made it lightweight enough for the AI age? Not heavyweight ontologies. Not complex rule engines. Just: here are our business concepts, here are the synonyms, here's how they relate.
+
+This PoC tests whether that middle ground—structured enough to guide, simple enough to maintain—actually works.
+
+**Full disclosure:** I'm not an AI researcher. I'm not a knowledge graph expert. I'm a process consultant learning in public. If you spot issues or see better approaches, I want to hear them. This is about asking good questions, not claiming perfect answers.
+
+---
+
 ## Architecture
 
 ```
@@ -381,6 +397,26 @@ This is a proof of concept with intentional constraints:
 - **Limited error handling** - Basic exception handling only
 
 These limitations keep the implementation simple for learning and experimentation.
+
+---
+
+## A Note on Approach
+
+This experiment comes from a business process management perspective, not a pure AI/ML perspective. The concept graph structure draws inspiration from business semantics standards (particularly SBVR) adapted for modern retrieval systems.
+
+**What this means:**
+- The concepts represent business vocabulary, not arbitrary tags
+- The relationships (`related_to`) mirror how business processes actually connect
+- The emphasis on explainability reflects enterprise governance needs
+
+**What this doesn't mean:**
+- This isn't claiming to be the "right" way to do semantic layers
+- There are likely better embedding models, matching algorithms, or architectures
+- Experts in knowledge graphs or NLP may spot obvious improvements
+
+**The point:** Can process consultants and business analysts—people who understand organizational semantics—contribute meaningfully to AI architecture? Or does this all need to be ML engineering?
+
+I'm testing the former. Feedback welcome.
 
 ---
 
